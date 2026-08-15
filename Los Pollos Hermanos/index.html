@@ -1,0 +1,2694 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Pollos Hermanos - Taste The Family Tradition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600;700&family=Special+Elite&display=swap');
+
+        :root {
+            --primary: #FDB913;
+            --primary-dark: #E5A200;
+            --secondary: #C8102E;
+            --bg: #FFFFFF;
+            --bg-alt: #FFF8E7;
+            --text: #333333;
+            --text-light: #666666;
+            --card-bg: #FFFFFF;
+            --shadow: rgba(0,0,0,0.1);
+            --nav-bg: #C8102E;
+            --accent: #FDB913;
+            --grain-opacity: 0;
+            --neon-glow: none;
+            --border: #E0E0E0;
+        }
+
+        .dark-mode {
+            --primary: #00FF41;
+            --primary-dark: #00CC33;
+            --secondary: #00FF41;
+            --bg: #0A0A0A;
+            --bg-alt: #111111;
+            --text: #C0C0C0;
+            --text-light: #888888;
+            --card-bg: #1A1A1A;
+            --shadow: rgba(0,255,65,0.1);
+            --nav-bg: #0D0D0D;
+            --accent: #00FF41;
+            --grain-opacity: 0.03;
+            --border: #2A2A2A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+            opacity: var(--grain-opacity);
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .dark-mode body::before,
+        .dark-mode::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 65, 0.01) 2px,
+                rgba(0, 255, 65, 0.01) 4px
+            );
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        .navbar {
+            background: var(--nav-bg);
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .dark-mode .navbar {
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            transition: all 0.8s ease;
+        }
+
+        .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .logo-text {
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .dark-mode .nav-links a:hover {
+            background: rgba(0, 255, 65, 0.1);
+            text-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+        }
+
+        .nav-links .dark-label {
+            display: none;
+        }
+
+        .dark-mode .nav-links .clean-label {
+            display: none;
+        }
+
+        .dark-mode .nav-links .dark-label {
+            display: inline;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-btn {
+            position: relative;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--primary);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .security-indicator {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-family: 'Special Elite', monospace;
+            font-size: 0.75rem;
+        }
+
+        .dark-mode .security-indicator {
+            display: flex;
+            animation: flicker 3s infinite;
+        }
+
+        .security-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--primary); }
+            50% { opacity: 0.5; box-shadow: 0 0 8px var(--primary); }
+        }
+
+        @keyframes flicker {
+            0%, 95%, 100% { opacity: 1; }
+            96% { opacity: 0.4; }
+            97% { opacity: 1; }
+            98% { opacity: 0.6; }
+        }
+
+        .hero {
+            height: 500px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: all 0.8s ease;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: all 0.8s ease;
+        }
+
+        .hero-bg-clean {
+            background: linear-gradient(135deg, #C8102E 0%, #8B0000 50%, #FDB913 100%);
+            opacity: 1;
+        }
+
+        .dark-mode .hero-bg-clean {
+            opacity: 0;
+        }
+
+        .hero-bg-dark {
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 50%, #0A0A0A 100%);
+            opacity: 0;
+        }
+
+        .dark-mode .hero-bg-dark {
+            opacity: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .hero-title {
+            color: var(--primary);
+            text-shadow: 0 0 30px rgba(0, 255, 65, 0.3), 0 0 60px rgba(0, 255, 65, 0.1);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .hero-subtitle {
+            color: var(--text-light);
+            font-family: 'Special Elite', monospace;
+        }
+
+        .hero-subtitle .dark-text { display: none; }
+        .dark-mode .hero-subtitle .clean-text { display: none; }
+        .dark-mode .hero-subtitle .dark-text { display: inline; }
+
+        .hero-btn {
+            padding: 14px 40px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--primary);
+            color: #000;
+            font-weight: 600;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .dark-mode .hero-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .dark-mode .hero-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+
+        .hero-btn .dark-text { display: none; }
+        .dark-mode .hero-btn .clean-text { display: none; }
+        .dark-mode .hero-btn .dark-text { display: inline; }
+
+        
+        .hex-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        .dark-mode .hex-grid {
+            opacity: 0.1;
+        }
+
+        .promo-banner {
+            background: var(--primary);
+            color: #000;
+            text-align: center;
+            padding: 12px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .promo-banner {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--primary);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .promo-banner .dark-text { display: none; }
+        .dark-mode .promo-banner .clean-text { display: none; }
+        .dark-mode .promo-banner .dark-text { display: inline; }
+
+        
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text);
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .section-title {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .section-subtitle {
+            font-family: 'Special Elite', monospace;
+        }
+
+        .section-subtitle .dark-text { display: none; }
+        .dark-mode .section-subtitle .clean-text { display: none; }
+        .dark-mode .section-subtitle .dark-text { display: inline; }
+
+        
+        .menu-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .cat-tab {
+            padding: 10px 24px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .cat-tab.active, .cat-tab:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #000;
+        }
+
+        .dark-mode .cat-tab.active,
+        .dark-mode .cat-tab:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+        }
+
+        .cat-tab .dark-text { display: none; }
+        .dark-mode .cat-tab .clean-text { display: none; }
+        .dark-mode .cat-tab .dark-text { display: inline; }
+
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .dark-mode .product-card {
+            border: 1px solid rgba(0, 255, 65, 0.15);
+        }
+
+        .dark-mode .product-card:hover {
+            border-color: rgba(0, 255, 65, 0.4);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.8s ease;
+        }
+
+        .product-image-clean {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            transition: opacity 0.8s ease;
+        }
+
+        .product-image-dark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .dark-mode .product-image-clean {
+            opacity: 0;
+        }
+
+        .dark-mode .product-image-dark {
+            opacity: 1;
+        }
+
+        .img-clean-bg {
+            background: linear-gradient(135deg, #FFF3D4 0%, #FFE4B5 100%);
+        }
+
+        .img-dark-bg {
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 100%);
+        }
+
+        .dark-product-visual {
+            text-align: center;
+        }
+
+        .dark-product-visual .substance-icon {
+            font-size: 3rem;
+            margin-bottom: 4px;
+        }
+
+        .dark-product-visual .substance-label {
+            font-family: 'Special Elite', monospace;
+            font-size: 0.7rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.6;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+            transition: all 0.8s ease;
+        }
+
+        .badge-popular {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .dark-mode .badge-popular {
+            background: rgba(0, 255, 65, 0.2);
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+        }
+
+        .product-info {
+            padding: 1.2rem;
+        }
+
+        .product-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.8s ease;
+        }
+
+        .product-name .dark-text { display: none; }
+        .dark-mode .product-name .clean-text { display: none; }
+        .dark-mode .product-name .dark-text { display: inline; }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            transition: all 0.8s ease;
+        }
+
+        .product-desc .dark-text { display: none; }
+        .dark-mode .product-desc .clean-text { display: none; }
+        .dark-mode .product-desc .dark-text { display: inline; }
+
+        .dark-mode .product-desc {
+            font-family: 'Special Elite', monospace;
+        }
+
+        .product-meta-dark {
+            display: none;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .dark-mode .product-meta-dark {
+            display: flex;
+        }
+
+        .meta-tag {
+            font-family: 'Special Elite', monospace;
+            font-size: 0.7rem;
+            color: var(--primary);
+            background: rgba(0, 255, 65, 0.08);
+            padding: 3px 8px;
+            border-radius: 3px;
+            border: 1px solid rgba(0, 255, 65, 0.15);
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--secondary);
+            transition: all 0.8s ease;
+        }
+
+        .product-price .dark-text { display: none; }
+        .dark-mode .product-price .clean-text { display: none; }
+        .dark-mode .product-price .dark-text { display: inline; }
+
+        .dark-mode .product-price {
+            color: var(--primary);
+            text-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+        }
+
+        .crypto-price {
+            display: none;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        .dark-mode .crypto-price {
+            display: block;
+        }
+
+        .add-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-btn:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .dark-mode .add-btn:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
+
+        .add-btn .dark-text { display: none; }
+        .dark-mode .add-btn .clean-text { display: none; }
+        .dark-mode .add-btn .dark-text { display: inline; }
+
+        
+        .specials-banner {
+            background: var(--bg-alt);
+            padding: 3rem 2rem;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .specials-banner {
+            border-top: 1px solid rgba(0, 255, 65, 0.1);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+        }
+
+        .specials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .special-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.5s ease;
+        }
+
+        .dark-mode .special-card {
+            border-color: rgba(0, 255, 65, 0.15);
+        }
+
+        .special-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .special-icon {
+            font-size: 3rem;
+            transition: all 0.8s ease;
+        }
+
+        .special-info h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+            transition: all 0.8s ease;
+        }
+
+        .special-info h3 .dark-text { display: none; }
+        .dark-mode .special-info h3 .clean-text { display: none; }
+        .dark-mode .special-info h3 .dark-text { display: inline; }
+
+        .special-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            transition: all 0.8s ease;
+        }
+
+        .special-info p .dark-text { display: none; }
+        .dark-mode .special-info p .clean-text { display: none; }
+        .dark-mode .special-info p .dark-text { display: inline; }
+
+        .dark-mode .special-info p {
+            font-family: 'Special Elite', monospace;
+        }
+
+        .locations-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: var(--bg-alt);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .map-container {
+            border-color: rgba(0, 255, 65, 0.15);
+            background: #0D0D0D;
+        }
+
+        .map-placeholder {
+            text-align: center;
+            transition: all 0.8s ease;
+        }
+
+        .map-placeholder .map-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .map-placeholder p {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .map-placeholder p .dark-text { display: none; }
+        .dark-mode .map-placeholder p .clean-text { display: none; }
+        .dark-mode .map-placeholder p .dark-text { display: inline; }
+
+        .dark-mode .map-placeholder p {
+            font-family: 'Special Elite', monospace;
+            color: var(--primary);
+        }
+
+        .map-dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .dark-mode .map-dots {
+            opacity: 1;
+        }
+
+        .map-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: map-pulse 2s infinite;
+        }
+
+        .map-dot::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            animation: map-ring 2s infinite;
+        }
+
+        @keyframes map-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes map-ring {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .location-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .location-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.5s ease;
+        }
+
+        .dark-mode .location-card {
+            border-color: rgba(0, 255, 65, 0.15);
+        }
+
+        .location-card h4 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            transition: all 0.8s ease;
+        }
+
+        .location-card h4 .dark-text { display: none; }
+        .dark-mode .location-card h4 .clean-text { display: none; }
+        .dark-mode .location-card h4 .dark-text { display: inline; }
+
+        .dark-mode .location-card h4 {
+            color: var(--primary);
+        }
+
+        .location-card p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .location-card p .dark-text { display: none; }
+        .dark-mode .location-card p .clean-text { display: none; }
+        .dark-mode .location-card p .dark-text { display: inline; }
+
+        .dark-mode .location-card p {
+            font-family: 'Special Elite', monospace;
+        }
+
+        .location-status {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.8s ease;
+        }
+
+        .status-open {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .dark-mode .status-open {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .order-section {
+            background: var(--bg-alt);
+            padding: 4rem 2rem;
+            transition: all 0.8s ease;
+        }
+
+        .order-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .order-form {
+            border-color: rgba(0, 255, 65, 0.15);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            transition: all 0.8s ease;
+        }
+
+        .form-group label .dark-text { display: none; }
+        .dark-mode .form-group label .clean-text { display: none; }
+        .dark-mode .form-group label .dark-text { display: inline; }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .dark-mode .form-group input,
+        .dark-mode .form-group select {
+            font-family: 'Special Elite', monospace;
+            border-color: rgba(0, 255, 65, 0.2);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .dark-mode .form-group input:focus {
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .dark-mode .checkout-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .dark-mode .checkout-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .checkout-btn .dark-text { display: none; }
+        .dark-mode .checkout-btn .clean-text { display: none; }
+        .dark-mode .checkout-btn .dark-text { display: inline; }
+
+        
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pay-method {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .pay-method.active {
+            border-color: var(--primary);
+            background: rgba(253, 185, 19, 0.1);
+        }
+
+        .dark-mode .pay-method.active {
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .pay-method .dark-text { display: none; }
+        .dark-mode .pay-method .clean-text { display: none; }
+        .dark-mode .pay-method .dark-text { display: inline; }
+
+        
+        .footer {
+            background: #1A1A1A;
+            color: #999;
+            padding: 3rem 2rem 2rem;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .footer {
+            background: #050505;
+            border-top: 1px solid rgba(0, 255, 65, 0.1);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h4 {
+            font-family: 'Oswald', sans-serif;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            transition: all 0.8s ease;
+        }
+
+        .dark-mode .footer-col h4 {
+            color: var(--primary);
+        }
+
+        .footer-col h4 .dark-text { display: none; }
+        .dark-mode .footer-col h4 .clean-text { display: none; }
+        .dark-mode .footer-col h4 .dark-text { display: inline; }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col ul li a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-col ul li a .dark-text { display: none; }
+        .dark-mode .footer-col ul li a .clean-text { display: none; }
+        .dark-mode .footer-col ul li a .dark-text { display: inline; }
+
+        .dark-mode .footer-col ul li a {
+            font-family: 'Special Elite', monospace;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            font-size: 0.8rem;
+        }
+
+        .footer-bottom .dark-text { display: none; }
+        .dark-mode .footer-bottom .clean-text { display: none; }
+        .dark-mode .footer-bottom .dark-text { display: inline; }
+
+        .dark-mode .footer-bottom {
+            border-color: rgba(0, 255, 65, 0.1);
+            font-family: 'Special Elite', monospace;
+            color: rgba(0, 255, 65, 0.4);
+        }
+
+        .mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.5s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .mode-toggle:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .dark-mode .mode-toggle {
+            border-color: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .toggle-label {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            user-select: none;
+        }
+
+        .dark-mode .toggle-label {
+            font-family: 'Special Elite', monospace;
+            color: var(--primary);
+        }
+
+        .toggle-switch {
+            width: 44px;
+            height: 24px;
+            background: #DDD;
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .dark-mode .toggle-switch.active {
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .toggle-switch.active::after {
+            left: 23px;
+        }
+
+        .panic-btn {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 10000;
+            background: #FF0000;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s ease;
+            animation: panic-glow 2s infinite;
+        }
+
+        .dark-mode .panic-btn {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @keyframes panic-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(255,0,0,0.3); }
+            50% { box-shadow: 0 0 15px rgba(255,0,0,0.5); }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 20000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .dark-mode .modal {
+            border-color: rgba(0, 255, 65, 0.2);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.1);
+        }
+
+        .modal h3 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .dark-mode .modal h3 {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .dark-mode .modal input {
+            font-family: 'Special Elite', monospace;
+            border-color: rgba(0, 255, 65, 0.2);
+        }
+
+        .dark-mode .modal input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .dark-mode .modal-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .dark-mode .modal-btn:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 15000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .transition-overlay.active {
+            opacity: 1;
+        }
+
+        .chem-structure {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .dark-mode .chem-structure {
+            opacity: 0.05;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: var(--card-bg);
+            z-index: 11000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 1px solid var(--border);
+            box-shadow: -5px 0 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .dark-mode .cart-sidebar {
+            border-color: rgba(0, 255, 65, 0.15);
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cart-header h3 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .dark-mode .cart-header h3 {
+            color: var(--primary);
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item-icon {
+            font-size: 2rem;
+            width: 50px;
+            text-align: center;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cart-item-price {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .cart-total {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cart-total-row.total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border);
+            margin-top: 0.5rem;
+        }
+
+        .dark-mode .cart-total-row.total {
+            color: var(--primary);
+        }
+
+        .cart-checkout-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode .cart-checkout-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .dark-mode .cart-checkout-btn:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-light);
+        }
+
+        .cart-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .disclaimer-bar {
+            display: none;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            color: #FF4444;
+            text-align: center;
+            padding: 8px;
+            font-family: 'Special Elite', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .dark-mode .disclaimer-bar {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .specials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .dark-mode .section-title {
+            animation: glitch 0.3s ease forwards;
+        }
+
+        .dark-mode .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--primary);
+            margin: 10px auto 0;
+            box-shadow: 0 0 10px var(--primary);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="transition-overlay" id="transitionOverlay"></div>
+
+    
+    <div class="modal-overlay" id="verifiedModal">
+        <div class="modal">
+            <h3>ðŸ”’ Verified Access</h3>
+            <p style="margin-bottom:1.5rem;font-size:0.85rem;color:var(--text-light);font-family:'Special Elite',monospace;">
+                Enter your buyer verification code
+            </p>
+            <input type="text" placeholder="XXXX-XXXX-XXXX" id="verifyCode" maxlength="14" autocomplete="off">
+            <input type="password" placeholder="Passphrase" autocomplete="off">
+            <button class="modal-btn" onclick="closeModal()">Authenticate</button>
+            <button class="modal-close" onclick="closeModal()">Cancel</button>
+            <p style="margin-top:1rem;font-size:0.65rem;color:var(--text-light);font-family:'Special Elite',monospace;">
+                âš  This is a fictional fan project. Not real.
+            </p>
+        </div>
+    </div>
+
+    
+    <button class="panic-btn" id="panicBtn" onclick="panicExit()">âš  PANIC EXIT</button>
+
+    
+    <nav class="navbar">
+        <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 50 50">
+                <circle cx="25" cy="20" r="15" fill="var(--primary)" opacity="0.9"/>
+                <ellipse cx="25" cy="35" rx="12" ry="8" fill="var(--primary)" opacity="0.7"/>
+                <circle cx="21" cy="17" r="2" fill="#000" opacity="0.6"/>
+                <circle cx="29" cy="17" r="2" fill="#000" opacity="0.6"/>
+                <path d="M20 23 Q25 27 30 23" stroke="#000" stroke-width="1.5" fill="none" opacity="0.5"/>
+            </svg>
+            <span class="logo-text">
+                <span class="clean-text">Los Pollos Hermanos</span>
+                <span class="dark-text">Heisenberg Network</span>
+            </span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#menu">
+                <span class="clean-label">Menu</span>
+                <span class="dark-label">Catalog</span>
+            </a></li>
+            <li><a href="#specials">
+                <span class="clean-label">Specials</span>
+                <span class="dark-label">Deals</span>
+            </a></li>
+            <li><a href="#locations">
+                <span class="clean-label">Locations</span>
+                <span class="dark-label">Network</span>
+            </a></li>
+            <li><a href="#order">
+                <span class="clean-label">Order Now</span>
+                <span class="dark-label">Acquire</span>
+            </a></li>
+        </ul>
+
+        <div class="nav-right">
+            <div class="security-indicator">
+                <span class="security-dot"></span>
+                <span>TOR // ENCRYPTED</span>
+            </div>
+            <button class="cart-btn" onclick="toggleCart()">
+                ðŸ›’ <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </nav>
+
+    
+    <div class="disclaimer-bar">
+        âš  FICTIONAL FAN PROJECT â€” BREAKING BAD TRIBUTE â€” NOT A REAL MARKETPLACE âš 
+    </div>
+
+    
+    <div class="promo-banner">
+        <span class="clean-text">ðŸ— Family Night Special â€” Buy 2 Buckets, Get Sides FREE! ðŸ—</span>
+        <span class="dark-text">ðŸ”’ New Batch Available â€” Purity: 99.1% â€” Limited Supply ðŸ”’</span>
+    </div>
+
+    
+    <section class="hero">
+        <div class="hero-bg hero-bg-clean"></div>
+        <div class="hero-bg hero-bg-dark"></div>
+
+        
+        <svg class="chem-structure" style="top:10%;left:5%;width:200px;height:200px;" viewBox="0 0 200 200">
+            <line x1="50" y1="100" x2="100" y2="70" stroke="var(--primary)" stroke-width="1"/>
+            <line x1="100" y1="70" x2="150" y2="100" stroke="var(--primary)" stroke-width="1"/>
+            <line x1="150" y1="100" x2="150" y2="150" stroke="var(--primary)" stroke-width="1"/>
+            <line x1="150" y1="150" x2="100" y2="180" stroke="var(--primary)" stroke-width="1"/>
+            <line x1="100" y1="180" x2="50" y2="150" stroke="var(--primary)" stroke-width="1"/>
+            <line x1="50" y1="150" x2="50" y2="100" stroke="var(--primary)" stroke-width="1"/>
+            <circle cx="50" cy="100" r="3" fill="var(--primary)"/>
+            <circle cx="100" cy="70" r="3" fill="var(--primary)"/>
+            <circle cx="150" cy="100" r="3" fill="var(--primary)"/>
+            <circle cx="150" cy="150" r="3" fill="var(--primary)"/>
+            <circle cx="100" cy="180" r="3" fill="var(--primary)"/>
+            <circle cx="50" cy="150" r="3" fill="var(--primary)"/>
+        </svg>
+
+        <svg class="chem-structure" style="bottom:10%;right:5%;width:150px;height:150px;" viewBox="0 0 150 150">
+            <line x1="30" y1="75" x2="75" y2="30" stroke="var(--primary)" stroke-width="1"/>
+            <line x1="75" y1="30" x2="120" y2="75" stroke="var(--primary)" stroke-width="1"/>
+            <line x1="120" y1="75" x2="75" y2="120" stroke="var(--primary)" stroke-width="1"/>
+            <line x1="75" y1="120" x2="30" y2="75" stroke="var(--primary)" stroke-width="1"/>
+            <circle cx="30" cy="75" r="3" fill="var(--primary)"/>
+            <circle cx="75" cy="30" r="3" fill="var(--primary)"/>
+            <circle cx="120" cy="75" r="3" fill="var(--primary)"/>
+            <circle cx="75" cy="120" r="3" fill="var(--primary)"/>
+        </svg>
+
+        <div class="hex-grid">
+            <div class="map-dot" style="top:20%;left:15%"></div>
+            <div class="map-dot" style="top:60%;left:80%"></div>
+            <div class="map-dot" style="top:40%;left:50%"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="clean-text">Taste The Family Tradition</span>
+                <span class="dark-text">Say My Name</span>
+            </h1>
+            <p class="hero-subtitle">
+                <span class="clean-text">Hand-breaded, golden-fried chicken made with our secret family recipe since 1986</span>
+                <span class="dark-text">The Empire Business // Est. ABQ, NM // 99.1% Pure</span>
+            </p>
+            <button class="hero-btn" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+                <span class="clean-text">Order Now</span>
+                <span class="dark-text">Browse Catalog</span>
+            </button>
+        </div>
+    </section>
+
+    
+    <section class="menu-section" id="menu">
+        <h2 class="section-title">
+            <span class="clean-text">Our Menu</span>
+            <span class="dark-text">Available Product</span>
+        </h2>
+        <p class="section-subtitle">
+            <span class="clean-text">Made fresh daily with love and the finest ingredients</span>
+            <span class="dark-text">Current inventory // Verified quality // Secure shipping</span>
+        </p>
+
+        <div class="category-tabs">
+            <button class="cat-tab active">
+                <span class="clean-text">Signature Chicken</span>
+                <span class="dark-text">Stimulants</span>
+            </button>
+            <button class="cat-tab">
+                <span class="clean-text">Sides</span>
+                <span class="dark-text">Depressants</span>
+            </button>
+            <button class="cat-tab">
+                <span class="clean-text">Family Meals</span>
+                <span class="dark-text">Hallucinogens</span>
+            </button>
+            <button class="cat-tab">
+                <span class="clean-text">Drinks</span>
+                <span class="dark-text">Prescription</span>
+            </button>
+            <button class="cat-tab">
+                <span class="clean-text">Desserts</span>
+                <span class="dark-text">Research Chems</span>
+            </button>
+        </div>
+
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-image-clean img-clean-bg">
+                        ðŸ—
+                    </div>
+                    <div class="product-image-dark img-dark-bg">
+                        <div class="dark-product-visual">
+                            <div class="substance-icon">ðŸ’Ž</div>
+                            <div class="substance-label">Crystal // Blue</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="product-badge badge-popular">
+                    <span class="clean-text">Best Seller</span>
+                    <span class="dark-text">Top Grade</span>
+                </span>
+                <div class="product-info">
+                    <h3 class="product-name">
+                        <span class="clean-text">Classic Bucket</span>
+                        <span class="dark-text">Heisenberg Blue</span>
+                    </h3>
+                    <p class="product-desc">
+                        <span class="clean-text">8pc golden fried chicken, our signature recipe. Feeds 3-4.</span>
+                        <span class="dark-text">Premium grade. Batch #4817. The one who knocks.</span>
+                    </p>
+                    <div class="product-meta-dark">
+                        <span class="meta-tag">99.1% Pure</span>
+                        <span class="meta-tag">Batch #4817</span>
+                        <span class="meta-tag">28g</span>
+                    </div>
+                    <div class="product-footer">
+                        <div>
+                            <div class="product-price">
+                                <span class="clean-text">$24.99</span>
+                                <span class="dark-text">$2,800</span>
+                            </div>
+                            <div class="crypto-price">â‰ˆ 0.042 BTC</div>
+                        </div>
+                        <button class="add-btn" onclick="addToCart('Classic Bucket', 'Heisenberg Blue', 24.99, 2800, 'ðŸ—', 'ðŸ’Ž')">
+                            <span class="clean-text">+</span>
+                            <span class="dark-text">+</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-image-clean img-clean-bg">
+                        ðŸŸ
+                    </div>
+                    <div class="product-image-dark img-dark-bg">
+                        <div class="dark-product-visual">
+                            <div class="substance-icon">ðŸŒ¿</div>
+                            <div class="substance-label">Organic // Hydro</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">
+                        <span class="clean-text">Curly Fries</span>
+                        <span class="dark-text">Kush Premium</span>
+                    </h3>
+                    <p class="product-desc">
+                        <span class="clean-text">Seasoned curly fries, perfectly crispy. Large serving.</span>
+                        <span class="dark-text">Indoor hydro. Top shelf. Lab tested.</span>
+                    </p>
+                    <div class="product-meta-dark">
+                        <span class="meta-tag">Indoor</span>
+                        <span class="meta-tag">THC 31%</span>
+                        <span class="meta-tag">1oz</span>
+                    </div>
+                    <div class="product-footer">
+                        <div>
+                            <div class="product-price">
+                                <span class="clean-text">$4.99</span>
+                                <span class="dark-text">$320</span>
+                            </div>
+                            <div class="crypto-price">â‰ˆ 0.0048 BTC</div>
+                        </div>
+                        <button class="add-btn" onclick="addToCart('Curly Fries', 'Kush Premium', 4.99, 320, 'ðŸŸ', 'ðŸŒ¿')">+</button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-image-clean img-clean-bg">
+                        ðŸ¥¤
+                    </div>
+                    <div class="product-image-dark img-dark-bg">
+                        <div class="dark-product-visual">
+                            <div class="substance-icon">ðŸ’Š</div>
+                            <div class="substance-label">Pharma // Pressed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">
+                        <span class="clean-text">Fountain Drink</span>
+                        <span class="dark-text">Capsule Stack</span>
+                    </h3>
+                    <p class="product-desc">
+                        <span class="clean-text">Choose from our selection of refreshing beverages.</span>
+                        <span class="dark-text">Pharmaceutical grade. Sealed blister packs.</span>
+                    </p>
+                    <div class="product-meta-dark">
+                        <span class="meta-tag">Pharma</span>
+                        <span class="meta-tag">Sealed</span>
+                        <span class="meta-tag">30ct</span>
+                    </div>
+                    <div class="product-footer">
+                        <div>
+                            <div class="product-price">
+                                <span class="clean-text">$2.49</span>
+                                <span class="dark-text">$450</span>
+                            </div>
+                            <div class="crypto-price">â‰ˆ 0.0067 BTC</div>
+                        </div>
+                        <button class="add-btn" onclick="addToCart('Fountain Drink', 'Capsule Stack', 2.49, 450, 'ðŸ¥¤', 'ðŸ’Š')">+</button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-image-clean img-clean-bg">
+                        ðŸ”
+                    </div>
+                    <div class="product-image-dark img-dark-bg">
+                        <div class="dark-product-visual">
+                            <div class="substance-icon">ðŸ”®</div>
+                            <div class="substance-label">Psychedelic // Tab</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">
+                        <span class="clean-text">Pollos Burger</span>
+                        <span class="dark-text">Blotter Sheet</span>
+                    </h3>
+                    <p class="product-desc">
+                        <span class="clean-text">Juicy chicken burger with our special sauce and pickles.</span>
+                        <span class="dark-text">200ug tabs. Hoffman legacy art. Vacuum sealed.</span>
+                    </p>
+                    <div class="product-meta-dark">
+                        <span class="meta-tag">200ug</span>
+                        <span class="meta-tag">100 tabs</span>
+                        <span class="meta-tag">GG Tested</span>
+                    </div>
+                    <div class="product-footer">
+                        <div>
+                            <div class="product-price">
+                                <span class="clean-text">$8.99</span>
+                                <span class="dark-text">$650</span>
+                            </div>
+                            <div class="crypto-price">â‰ˆ 0.0097 BTC</div>
+                        </div>
+                        <button class="add-btn" onclick="addToCart('Pollos Burger', 'Blotter Sheet', 8.99, 650, 'ðŸ”', 'ðŸ”®')">+</button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-image-clean img-clean-bg">
+                        ðŸ¥—
+                    </div>
+                    <div class="product-image-dark img-dark-bg">
+                        <div class="dark-product-visual">
+                            <div class="substance-icon">âšª</div>
+                            <div class="substance-label">Powder // Import</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="product-badge badge-popular">
+                    <span class="clean-text">New!</span>
+                    <span class="dark-text">Fresh Batch</span>
+                </span>
+                <div class="product-info">
+                    <h3 class="product-name">
+                        <span class="clean-text">Garden Salad</span>
+                        <span class="dark-text">Colombian Snow</span>
+                    </h3>
+                    <p class="product-desc">
+                        <span class="clean-text">Fresh mixed greens with ranch dressing on the side.</span>
+                        <span class="dark-text">Fish scale. Direct import. Acetone wash.</span>
+                    </p>
+                    <div class="product-meta-dark">
+                        <span class="meta-tag">92% Pure</span>
+                        <span class="meta-tag">Import</span>
+                        <span class="meta-tag">1g</span>
+                    </div>
+                    <div class="product-footer">
+                        <div>
+                            <div class="product-price">
+                                <span class="clean-text">$6.99</span>
+                                <span class="dark-text">$120</span>
+                            </div>
+                            <div class="crypto-price">â‰ˆ 0.0018 BTC</div>
+                        </div>
+                        <button class="add-btn" onclick="addToCart('Garden Salad', 'Colombian Snow', 6.99, 120, 'ðŸ¥—', 'âšª')">+</button>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="product-image-clean img-clean-bg">
+                        ðŸ°
+                    </div>
+                    <div class="product-image-dark img-dark-bg">
+                        <div class="dark-product-visual">
+                            <div class="substance-icon">ðŸŸ£</div>
+                            <div class="substance-label">MDMA // Crystal</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">
+                        <span class="clean-text">Tres Leches Cake</span>
+                        <span class="dark-text">Molly Crystal</span>
+                    </h3>
+                    <p class="product-desc">
+                        <span class="clean-text">Traditional three-milk cake. Slice or whole.</span>
+                        <span class="dark-text">Dutch press. Marquis tested. Moon rocks.</span>
+                    </p>
+                    <div class="product-meta-dark">
+                        <span class="meta-tag">84% MDMA</span>
+                        <span class="meta-tag">Marquis âœ“</span>
+                        <span class="meta-tag">1g</span>
+                    </div>
+                    <div class="product-footer">
+                        <div>
+                            <div class="product-price">
+                                <span class="clean-text">$5.49</span>
+                                <span class="dark-text">$90</span>
+                            </div>
+                            <div class="crypto-price">â‰ˆ 0.0013 BTC</div>
+                        </div>
+                        <button class="add-btn" onclick="addToCart('Tres Leches', 'Molly Crystal', 5.49, 90, 'ðŸ°', 'ðŸŸ£')">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="specials-banner" id="specials">
+        <h2 class="section-title" style="margin-bottom:0.5rem;">
+            <span class="clean-text">Today's Specials</span>
+            <span class="dark-text">Active Deals</span>
+        </h2>
+        <p class="section-subtitle">
+            <span class="clean-text">Limited time offers for the whole family!</span>
+            <span class="dark-text">Time-limited. Verified buyers only.</span>
+        </p>
+
+        <div class="specials-grid">
+            <div class="special-card">
+                <div class="special-icon">
+                    <span class="clean-text">ðŸ—</span>
+                    <span class="dark-text">âš—ï¸</span>
+                </div>
+                <div class="special-info">
+                    <h3>
+                        <span class="clean-text">Family Night Special</span>
+                        <span class="dark-text">Bulk Discount</span>
+                    </h3>
+                    <p>
+                        <span class="clean-text">Buy 2 buckets, get all sides FREE every Tuesday night!</span>
+                        <span class="dark-text">Order 10+ units, receive 15% off. Auto-applied at checkout.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="special-card">
+                <div class="special-icon">
+                    <span class="clean-text">ðŸŽ‰</span>
+                    <span class="dark-text">ðŸ”</span>
+                </div>
+                <div class="special-info">
+                    <h3>
+                        <span class="clean-text">Tuesday Two-For-One</span>
+                        <span class="dark-text">Loyalty Program</span>
+                    </h3>
+                    <p>
+                        <span class="clean-text">BOGO on all sandwich combos! Dine-in or delivery.</span>
+                        <span class="dark-text">Return buyers get priority shipping and sample packs.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="special-card">
+                <div class="special-icon">
+                    <span class="clean-text">ðŸŽ‚</span>
+                    <span class="dark-text">ðŸ†•</span>
+                </div>
+                <div class="special-info">
+                    <h3>
+                        <span class="clean-text">Birthday Club</span>
+                        <span class="dark-text">New Arrivals</span>
+                    </h3>
+                    <p>
+                        <span class="clean-text">Free dessert on your birthday! Sign up for Pollos Rewards.</span>
+                        <span class="dark-text">Fresh batch dropped. Limited quantities. First come, first served.</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="locations-section" id="locations">
+        <h2 class="section-title">
+            <span class="clean-text">Our Locations</span>
+            <span class="dark-text">Distribution Network</span>
+        </h2>
+        <p class="section-subtitle">
+            <span class="clean-text">Find a Los Pollos Hermanos near you</span>
+            <span class="dark-text">Active nodes // Secure dead drops</span>
+        </p>
+
+        <div class="map-container">
+            <div class="map-dots">
+                <div class="map-dot" style="top:30%;left:25%"></div>
+                <div class="map-dot" style="top:45%;left:40%"></div>
+                <div class="map-dot" style="top:35%;left:60%"></div>
+                <div class="map-dot" style="top:55%;left:75%"></div>
+                <div class="map-dot" style="top:65%;left:30%"></div>
+                <div class="map-dot" style="top:25%;left:70%"></div>
+                <div class="map-dot" style="top:70%;left:55%"></div>
+            </div>
+            <div class="map-placeholder">
+                <div class="map-icon">
+                    <span class="clean-text">ðŸ“</span>
+                    <span class="dark-text">ðŸŒ</span>
+                </div>
+                <p>
+                    <span class="clean-text">Interactive Map â€” Click to find locations near you</span>
+                    <span class="dark-text">// 7 Active Nodes // Encrypted Coordinates //</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="location-cards">
+            <div class="location-card">
+                <h4>
+                    <span class="clean-text">Albuquerque â€” Central</span>
+                    <span class="dark-text">Node Alpha â€” ABQ</span>
+                </h4>
+                <p>
+                    <span class="clean-text">308 Negra Arroyo Lane<br>Albuquerque, NM 87104<br>Mon-Sun: 10am-10pm</span>
+                    <span class="dark-text">Drop Zone A<br>Coord: 35.0844Â° N<br>Window: 2200-0400</span>
+                </p>
+                <span class="location-status status-open">
+                    <span class="clean-text">Open Now</span>
+                    <span class="dark-text">Active</span>
+                </span>
+            </div>
+
+            <div class="location-card">
+                <h4>
+                    <span class="clean-text">Albuquerque â€” West Side</span>
+                    <span class="dark-text">Node Beta â€” West Mesa</span>
+                </h4>
+                <p>
+                    <span class="clean-text">1234 Coors Blvd SW<br>Albuquerque, NM 87121<br>Mon-Sun: 10am-10pm</span>
+                    <span class="dark-text">Dead Drop B<br>Coord: 35.0592Â° N<br>Window: 0100-0500</span>
+                </p>
+                <span class="location-status status-open">
+                    <span class="clean-text">Open Now</span>
+                    <span class="dark-text">Active</span>
+                </span>
+            </div>
+
+            <div class="location-card">
+                <h4>
+                    <span class="clean-text">Santa Fe</span>
+                    <span class="dark-text">Node Gamma â€” Santa Fe</span>
+                </h4>
+                <p>
+                    <span class="clean-text">567 Cerrillos Road<br>Santa Fe, NM 87501<br>Mon-Sat: 11am-9pm</span>
+                    <span class="dark-text">Relay Point C<br>Coord: 35.6870Â° N<br>Window: Weekdays only</span>
+                </p>
+                <span class="location-status status-open">
+                    <span class="clean-text">Open Now</span>
+                    <span class="dark-text">Active</span>
+                </span>
+            </div>
+
+            <div class="location-card">
+                <h4>
+                    <span class="clean-text">Las Cruces</span>
+                    <span class="dark-text">Node Delta â€” Border</span>
+                </h4>
+                <p>
+                    <span class="clean-text">890 S Main St<br>Las Cruces, NM 88001<br>Mon-Sun: 10am-10pm</span>
+                    <span class="dark-text">Tunnel Exit D<br>Coord: 32.3199Â° N<br>Window: Variable</span>
+                </p>
+                <span class="location-status status-open">
+                    <span class="clean-text">Open Now</span>
+                    <span class="dark-text">Standby</span>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="order-section" id="order">
+        <h2 class="section-title">
+            <span class="clean-text">Place Your Order</span>
+            <span class="dark-text">Secure Acquisition</span>
+        </h2>
+        <p class="section-subtitle">
+            <span class="clean-text">Free delivery on orders over $25!</span>
+            <span class="dark-text">All transactions encrypted. No logs. No traces.</span>
+        </p>
+
+        <div class="order-form">
+            <div class="form-group">
+                <label>
+                    <span class="clean-text">Delivery Address</span>
+                    <span class="dark-text">Drop Location</span>
+                </label>
+                <input type="text" id="addressInput">
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <span class="clean-text">Contact Phone</span>
+                    <span class="dark-text">Burner Number</span>
+                </label>
+                <input type="tel" id="phoneInput">
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <span class="clean-text">Payment Method</span>
+                    <span class="dark-text">Payment Channel</span>
+                </label>
+                <div class="payment-methods">
+                    <div class="pay-method active" onclick="selectPayment(this)">
+                        <span class="clean-text">ðŸ’³ Card</span>
+                        <span class="dark-text">â‚¿ Bitcoin</span>
+                    </div>
+                    <div class="pay-method" onclick="selectPayment(this)">
+                        <span class="clean-text">ðŸ“± Apple Pay</span>
+                        <span class="dark-text">Îž Monero</span>
+                    </div>
+                    <div class="pay-method" onclick="selectPayment(this)">
+                        <span class="clean-text">ðŸ’µ Cash</span>
+                        <span class="dark-text">ðŸ’µ Dead Drop</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <span class="clean-text">Special Instructions</span>
+                    <span class="dark-text">Coded Message</span>
+                </label>
+                <input type="text" id="instructionsInput">
+            </div>
+
+            <button class="checkout-btn" onclick="handleCheckout()">
+                <span class="clean-text">Place Order â€” Free Delivery</span>
+                <span class="dark-text">Initiate Secure Transaction</span>
+            </button>
+        </div>
+    </section>
+
+    
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>
+                    <span class="clean-text">About Us</span>
+                    <span class="dark-text">The Network</span>
+                </h4>
+                <ul>
+                    <li><a href="#">
+                        <span class="clean-text">Our Story</span>
+                        <span class="dark-text">Origins</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Careers</span>
+                        <span class="dark-text">Recruitment</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Franchising</span>
+                        <span class="dark-text">Territories</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Press</span>
+                        <span class="dark-text">OPSEC Guide</span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>
+                    <span class="clean-text">Customer Service</span>
+                    <span class="dark-text">Support</span>
+                </h4>
+                <ul>
+                    <li><a href="#">
+                        <span class="clean-text">Contact Us</span>
+                        <span class="dark-text">Encrypted Chat</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">FAQ</span>
+                        <span class="dark-text">Protocol Guide</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Delivery Info</span>
+                        <span class="dark-text">Shipping Methods</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Allergen Info</span>
+                        <span class="dark-text">Test Results</span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>
+                    <span class="clean-text">Connect</span>
+                    <span class="dark-text">Channels</span>
+                </h4>
+                <ul>
+                    <li><a href="#">
+                        <span class="clean-text">Instagram</span>
+                        <span class="dark-text">Tor Forum</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Facebook</span>
+                        <span class="dark-text">Signal Group</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Twitter</span>
+                        <span class="dark-text">Wickr</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">TikTok</span>
+                        <span class="dark-text">PGP Keys</span>
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>
+                    <span class="clean-text">Legal</span>
+                    <span class="dark-text">Disclaimers</span>
+                </h4>
+                <ul>
+                    <li><a href="#">
+                        <span class="clean-text">Privacy Policy</span>
+                        <span class="dark-text">No Logs Policy</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Terms of Service</span>
+                        <span class="dark-text">Buyer Agreement</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="clean-text">Accessibility</span>
+                        <span class="dark-text">Warrant Canary</span>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span class="clean-text">Â© 2024 Los Pollos Hermanos. All rights reserved. A Madrigal Electromotive subsidiary.</span>
+            <span class="dark-text">// No data stored // No logs kept // You were never here // Fan project â€” Breaking Bad tribute //</span>
+        </div>
+    </footer>
+
+    
+    <div class="mode-toggle" id="modeToggle" onclick="toggleMode()">
+        <span class="toggle-label" id="toggleLabel">Employee Access</span>
+        <div class="toggle-switch" id="toggleSwitch"></div>
+    </div>
+
+    
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>
+                <span class="clean-text">Your Order</span>
+                <span class="dark-text">Your Stash</span>
+            </h3>
+            <button class="cart-close" onclick="toggleCart()">âœ•</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">
+                <div class="cart-empty-icon">
+                    <span class="clean-text">ðŸ›’</span>
+                    <span class="dark-text">ðŸ“¦</span>
+                </div>
+                <p>
+                    <span class="clean-text">Your cart is empty</span>
+                    <span class="dark-text">Nothing acquired yet</span>
+                </p>
+            </div>
+        </div>
+        <div class="cart-total" id="cartTotal" style="display:none;">
+            <div class="cart-total-row">
+                <span>
+                    <span class="clean-text">Subtotal</span>
+                    <span class="dark-text">Subtotal</span>
+                </span>
+                <span id="subtotalAmount">$0.00</span>
+            </div>
+            <div class="cart-total-row">
+                <span>
+                    <span class="clean-text">Delivery</span>
+                    <span class="dark-text">Shipping</span>
+                </span>
+                <span>
+                    <span class="clean-text">FREE</span>
+                    <span class="dark-text">Included</span>
+                </span>
+            </div>
+            <div class="cart-total-row total">
+                <span>Total</span>
+                <span id="totalAmount">$0.00</span>
+            </div>
+            <button class="cart-checkout-btn" onclick="handleCheckout()">
+                <span class="clean-text">Checkout</span>
+                <span class="dark-text">Finalize Deal</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let isDarkMode = false;
+        let cart = [];
+
+        // Audio context for click sound
+        function playClickSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Mechanical click
+                const clickOsc = ctx.createOscillator();
+                const clickGain = ctx.createGain();
+                clickOsc.connect(clickGain);
+                clickGain.connect(ctx.destination);
+                clickOsc.frequency.setValueAtTime(800, ctx.currentTime);
+                clickOsc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.05);
+                clickGain.gain.setValueAtTime(0.3, ctx.currentTime);
+                clickGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                clickOsc.start(ctx.currentTime);
+                clickOsc.stop(ctx.currentTime + 0.08);
+
+                if (isDarkMode) {
+                    // Atmospheric low hum for entering dark mode
+                    const hum = ctx.createOscillator();
+                    const humGain = ctx.createGain();
+                    hum.connect(humGain);
+                    humGain.connect(ctx.destination);
+                    hum.frequency.setValueAtTime(80, ctx.currentTime);
+                    hum.type = 'sawtooth';
+                    humGain.gain.setValueAtTime(0, ctx.currentTime);
+                    humGain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 0.3);
+                    humGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5);
+                    hum.start(ctx.currentTime);
+                    hum.stop(ctx.currentTime + 1.5);
+                }
+            } catch(e) {}
+        }
+
+        function toggleMode() {
+            const overlay = document.getElementById('transitionOverlay');
+            const toggle = document.getElementById('toggleSwitch');
+            const label = document.getElementById('toggleLabel');
+
+            // Play sound
+            playClickSound();
+
+            // Flash overlay
+            overlay.classList.add('active');
+
+            setTimeout(() => {
+                isDarkMode = !isDarkMode;
+                document.documentElement.classList.toggle('dark-mode', isDarkMode);
+                toggle.classList.toggle('active', isDarkMode);
+                label.textContent = isDarkMode ? '// EXIT //' : 'Employee Access';
+
+                // Update placeholders
+                const addressInput = document.getElementById('addressInput');
+                const phoneInput = document.getElementById('phoneInput');
+                const instructionsInput = document.getElementById('instructionsInput');
+
+                if (isDarkMode) {
+                    addressInput.placeholder = 'GPS coordinates or dead drop code';
+                    phoneInput.placeholder = 'Burner # or Signal handle';
+                    instructionsInput.placeholder = 'Use coded language only';
+                } else {
+                    addressInput.placeholder = '123 Main St, Albuquerque, NM';
+                    phoneInput.placeholder = '(505) 555-0100';
+                    instructionsInput.placeholder = 'e.g., Ring doorbell, extra sauce';
+                }
+
+                // Update cart display
+                updateCartDisplay();
+            }, 500);
+
+            setTimeout(() => {
+                overlay.classList.remove('active');
+            }, 1000);
+
+            // Show verified buyer modal on first dark mode entry
+            if (!isDarkMode) {
+                setTimeout(() => {
+                    document.getElementById('verifiedModal').classList.add('show');
+                }, 1200);
+            }
+        }
+
+        function panicExit() {
+            const overlay = document.getElementById('transitionOverlay');
+            overlay.classList.add('active');
+
+            setTimeout(() => {
+                isDarkMode = false;
+                document.documentElement.classList.remove('dark-mode');
+                document.getElementById('toggleSwitch').classList.remove('active');
+                document.getElementById('toggleLabel').textContent = 'Employee Access';
+
+                document.getElementById('addressInput').placeholder = '123 Main St, Albuquerque, NM';
+                document.getElementById('phoneInput').placeholder = '(505) 555-0100';
+                document.getElementById('instructionsInput').placeholder = 'e.g., Ring doorbell, extra sauce';
+
+                updateCartDisplay();
+            }, 200);
+
+            setTimeout(() => {
+                overlay.classList.remove('active');
+            }, 600);
+        }
+
+        function closeModal() {
+            document.getElementById('verifiedModal').classList.remove('show');
+        }
+
+        function selectPayment(el) {
+            document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        // Category tabs
+        document.querySelectorAll('.cat-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Cart functionality
+        function addToCart(cleanName, darkName, cleanPrice, darkPrice, cleanIcon, darkIcon) {
+            cart.push({
+                cleanName, darkName, cleanPrice, darkPrice, cleanIcon, darkIcon,
+                id: Date.now()
+            });
+            updateCartDisplay();
+
+            // Brief animation on cart button
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.style.transform = 'scale(1.3)';
+            setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const countEl = document.getElementById('cartCount');
+            const itemsEl = document.getElementById('cartItems');
+            const totalEl = document.getElementById('cartTotal');
+            const subtotalEl = document.getElementById('subtotalAmount');
+            const totalAmountEl = document.getElementById('totalAmount');
+
+            countEl.textContent = cart.length;
+
+            if (cart.length === 0) {
+                itemsEl.innerHTML = `
+                    <div class="cart-empty">
+                        <div class="cart-empty-icon">
+                            <span class="clean-text">ðŸ›’</span>
+                            <span class="dark-text">ðŸ“¦</span>
+                        </div>
+                        <p>
+                            <span class="clean-text">Your cart is empty</span>
+                            <span class="dark-text">Nothing acquired yet</span>
+                        </p>
+                    </div>
+                `;
+                totalEl.style.display = 'none';
+                return;
+            }
+
+            totalEl.style.display = 'block';
+
+            let html = '';
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const price = isDarkMode ? item.darkPrice : item.cleanPrice;
+                const name = isDarkMode ? item.darkName : item.cleanName;
+                const icon = isDarkMode ? item.darkIcon : item.cleanIcon;
+                subtotal += price;
+
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-icon">${icon}</div>
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${name}</div>
+                            <div class="cart-item-price">$${price.toFixed(2)}</div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">âœ•</button>
+                    </div>
+                `;
+            });
+
+            itemsEl.innerHTML = html;
+            subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+            totalAmountEl.textContent = `$${subtotal.toFixed(2)}`;
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+            document.getElementById('cartOverlay').classList.toggle('show');
+        }
+
+        function handleCheckout() {
+            if (cart.length === 0) {
+                alert(isDarkMode ? 'Nothing in the stash.' : 'Your cart is empty!');
+                return;
+            }
+            alert(isDarkMode
+                ? 'âš  This is a FICTIONAL fan project. No real transactions. Breaking Bad tribute only.'
+                : 'Order placed! (This is a fictional demo website)'
+            );
+        }
+
+        document.getElementById('addressInput').placeholder = '123 Main St, Albuquerque, NM';
+        document.getElementById('phoneInput').placeholder = '(505) 555-0100';
+        document.getElementById('instructionsInput').placeholder = 'e.g., Ring doorbell, extra sauce';
+   
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isDarkMode) {
+                panicExit();
+            }
+        });
+    </script>
+</body>
+</html>
